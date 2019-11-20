@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from './navbar';
-
+import List from './list';
 import Footer from './footer';
 
 export default class App extends React.Component {
@@ -13,7 +13,7 @@ export default class App extends React.Component {
 
             <div>
                 <Navbar/>
-
+                <List/>
                 <Footer />
             </div>
 
