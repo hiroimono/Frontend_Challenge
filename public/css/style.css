@@ -1,0 +1,77 @@
+body {
+  background-color: white;
+  font-family: 'Slabo 27px', 'Ubuntu', 'Roboto', sans-serif;
+  background-image: url("../assets/background.jpg");
+  background-repeat: repeat;
+}
+
+.form-control {
+  padding: .1rem 1rem;
+}
+
+.btn {
+  font-size: 1.5rem;
+}
+
+.tm-navbar-bg {
+  background-color: #000;
+}
+
+.is-rounded {
+  width: 100%;
+}
+
+/* .audio-player {
+  position: sticky;
+  bottom: 40px;
+  left: 50%;
+  transform: translate(15%, 0);
+  background-color: #cfcccc;
+  padding: .5rem;
+  border: solid 1px;
+  box-shadow: 2px 2px 15px white;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 250px;
+} */
+.audio-player {
+  background: url('assets/player-icons/play-button.png');
+  height: 30rem;
+  background-size: contain;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 1000000000;
+}
+
+#play {
+  cursor: pointer;
+}
+
+#play-icon {
+  height: 10rem !important;
+  width: 15rem !important;
+}
+
+#loop-icon {
+  height: 3rem !important;
+}
+
+.carousel-item {
+  height: 100%;
+  min-height: 100vh;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.carousel-item a {
+  align-items:
+}
+
+.cd-hero {
+  height: 100vh;
+}
