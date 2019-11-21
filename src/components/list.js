@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import * as podlist from '../../utils/podlist';
+import axios from '../axios';
+// import * as podlist from '../../utils/podlist';
 
 function List() {
     const [podcasts, setPodcasts] = useState([]);
@@ -11,24 +12,33 @@ function List() {
 
     const loadFunc = () => {
 
-        console.log('podlist: ', podlist);
-        let myTracks = [...podlist.map( (podcast) => {
-            if (!podcast.image || podcast.image == null) {
-                return {
-                    ...podcast,
-                    image : 'https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fi.ytimg.com%2Fvi%2FuF_cuBWZBgE%2Fmaxresdefault.jpg&f=1&nofb=1'
-                };
-            } else {
-                return podcast;
-            }
-        })];
+        async function getPodcastsFromDatabase () {
+            const PodCastsTakenFromDB = await axios
+                .get('/getPodcastsFromDatabase');
 
-        console.log('tracks after: ', myTracks);
-        setPodcasts(myTracks);
+            console.log('PodCastsTakenFromDB: ', PodCastsTakenFromDB);
+
+            let myTracks = [...PodCastsTakenFromDB.data.map( (podcast) => {
+                ////Check for podcasts which are not have image and add them a default image
+                if (!podcast.img_url || podcast.img_url == null) {
+                    return {
+                        ...podcast,
+                        image : 'https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fi.ytimg.com%2Fvi%2FuF_cuBWZBgE%2Fmaxresdefault.jpg&f=1&nofb=1'
+                    };
+                } else {
+                    return podcast;
+                }
+            })];
+
+            console.log('tracks after: ', myTracks);
+            setPodcasts(myTracks);
+        }
+
+        getPodcastsFromDatabase();
 
     };
 
-    useEffect( loadFunc, [podlist] );
+    useEffect( loadFunc, [] );
 
     const more = () => {
         console.log('More button works!!!');
@@ -50,7 +60,7 @@ function List() {
                                     { podcasts && podcasts.map ( podcast => (
                                         <div key = { podcast.id } className="grid-item" style={{width: '12,5%'}}>
                                             <figure className="effect-bubba" style={{height:'100%'}}>
-                                                <img src={ podcast.image } alt="Image" className="img-fluid tm-img" style={{height:'100%', objectFit: 'cover'}}/>
+                                                <img src={ podcast.img_url } alt="Image" className="img-fluid tm-img" style={{height:'100%', objectFit: 'cover'}}/>
                                                 <figcaption>
                                                     <p className="tm-figure-description" style={{fontSize: '1.5rem'}}>{ podcast.title } </p>
                                                 </figcaption>

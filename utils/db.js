@@ -17,3 +17,11 @@ exports.registerPodcasts = (podlist_id, title, img_url) => {
         [podlist_id, title, img_url]
     );
 };
+
+exports.getPodcastsFromDatabase = () => {
+    return db.query (`SELECT * FROM podlist`)
+        .then(({rows}) => {
+            console.log('rows',rows);
+            return rows;
+        });
+};

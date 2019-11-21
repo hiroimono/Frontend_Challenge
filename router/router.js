@@ -14,5 +14,13 @@ const db                    = require('../utils/db');
 
 const router = express.Router();
 
+router.get('/getPodcastsFromDatabase', (req, res) => {
+    db.getPodcastsFromDatabase()
+        .then( (results) => {
+            res.json(results);
+        })
+        .catch();
+});
+
 
 module.exports = router;
