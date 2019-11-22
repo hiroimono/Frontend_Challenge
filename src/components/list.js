@@ -194,7 +194,7 @@ function List() {
         var interval;
         if( !isFirstMount && isRandom) {
             console.log('isRandom: ', isRandom);
-            interval = setInterval( () => loadFuncRAND(), (Math.random() * 5 * 1000));
+            interval = setInterval( () => loadFuncRAND(), (Math.random() * 0.1 * 1000));
         }
         return () => clearInterval(interval);
     }, [isRandom]);
