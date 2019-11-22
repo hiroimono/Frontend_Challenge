@@ -226,6 +226,7 @@ function List() {
 
                 <li className="selected">
                     <div className="cd-full-width" style={{position: "relative"}}>
+                        <div style={{display: 'flex', justifyContent:'space-around', width:'80%', color:'white', fontSize:'35px'}}>Podcast List</div>
                         <div style={{display: 'flex', justifyContent:'space-around', width:'80%'}}>
                             <button
                                 onClick = {orderDESC}

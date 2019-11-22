@@ -17,7 +17,7 @@ function Navbar () {
 
                     <div className="collapse navbar-toggleable-md text-xs-center tm-navbar" id="tmNavbar" style={{justifyContent:'flex-end'}}>
                         <ul className="nav navbar-nav">
-
+                            
                         </ul>
                     </div>
                 </div>
