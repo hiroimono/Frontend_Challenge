@@ -27,7 +27,7 @@ press again it will stop random rating.
 
 ## General info
 This project is simple a template for any list of Items with a system.
-	
+
 ## Technologies
 Project is created with:
 * Node.js / Express
@@ -37,12 +37,14 @@ Project is created with:
 * Webpack
 * Babel
 * PostgreSQL
-	
+
 ## Setup
 To run this project, install it locally using npm:
 
 ```
-$ cd ../lorem
+$ git clone https://github.com/hiroimono/Frontend_Challenge.git
+$ cd ../Frontend_Challenge
 $ npm install
-$ npm start
+$ node ./bundle-server.js
+$ node . // or $ nodemon .
 ```
