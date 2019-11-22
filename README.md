@@ -1,6 +1,5 @@
 # Frontend_Challenge
-
-* Mission:
+## Mission:
 
 1. Pick your top 10+ fav books, movies, video games, food, or whatever you
 wish. Build an Angular + ngrx/store or react-redux app that lists these
@@ -22,3 +21,28 @@ press again it will stop random rating.
 5. Focus on test driven approach while coding this assignment.
 
 6. Git repo with commit messages will be a plus.
+
+
+# Solution:
+
+## General info
+This project is simple a template for any list of Items with a system.
+	
+## Technologies
+Project is created with:
+* Node.js / Express
+* React
+* Redux
+* Hooks
+* Webpack
+* Babel
+* PostgreSQL
+	
+## Setup
+To run this project, install it locally using npm:
+
+```
+$ cd ../lorem
+$ npm install
+$ npm start
+```
