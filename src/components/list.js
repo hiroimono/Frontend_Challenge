@@ -12,12 +12,13 @@ function List() {
     const [order, setOrder] = useState('');
     const [isRandom, setIsRandom] = useState(false);
 
-
-
     const tracks = [];
 
-    console.log('tracks starting: ', tracks);
-    console.log('podcasts starting: ', podcasts);
+    console.log('1. tracks: ', tracks);
+    console.log('2. podcasts: ', podcasts);
+    console.log('3. podcastID: ', podcastID);
+    console.log('4. order: ', order);
+    console.log('5. isRandom: ', isRandom);
 
     const loadFunc = async () => {
         if(!isFirstMount){
@@ -175,33 +176,28 @@ function List() {
         }
     };
 
-
     // This is only for first mount
     useEffect( () => loadFunc(), [] );
 
-    // This is only next mounts
-    // useEffect( () => {
-    //     if (!isFirstMount) {
-    //         loadFunc();
-    //     } else isFirstMount = false;
-    // }, []);
+    // These are only next mounts
+    useEffect( () => {
+        if ( !isFirstMount && order == 'desc' ) {
+            loadFuncDESC();
+        } else if ( !isFirstMount && order == 'asc' ) {
+            loadFuncASC();
+        } else if ( !isFirstMount ) {
+            loadFunc();
+        } else isFirstMount = false;
+    }, [star, podcastID, order]);
 
     useEffect( () => {
-        if (!isRandom) {
+        var interval;
+        if( !isFirstMount && isRandom) {
             console.log('isRandom: ', isRandom);
-            clearInterval();
-            if ( !isFirstMount && order == 'desc' ) {
-                loadFuncDESC();
-            } else if ( !isFirstMount && order == 'asc' ) {
-                loadFuncASC();
-            } else if ( !isFirstMount ) {
-                loadFunc();
-            } else isFirstMount = false;
-        } else {
-            console.log('isRandom: ', isRandom);
-            setInterval( () => loadFuncRAND(), (Math.random() * 10 * 1000));
+            interval = setInterval( () => loadFuncRAND(), (Math.random() * 5 * 1000));
         }
-    }, [star, podcastID, order, isRandom]);
+        return () => clearInterval(interval);
+    }, [isRandom]);
 
     const orderDESC = () => {
         setOrder('desc');
@@ -211,10 +207,9 @@ function List() {
         setOrder('asc');
     };
 
-    const randomRating = async () => {
+    const randomRating = () => {
         // console.log('Test-RandomRating');
-        await setIsRandom(!isRandom);
-
+        setIsRandom(!isRandom);
     };
 
     const more = () => {
