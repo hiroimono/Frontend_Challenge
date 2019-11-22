@@ -26,6 +26,7 @@
         "bcryptjs": "^2.4.3",
         "beauty-stars": "^1.0.4",
         "bootstrap": "^4.3.1",
+        "clean-css": "^4.2.1",
         "compression": "^1.7.0",
         "cookie-session": "^2.0.0-alpha.2",
         "csurf": "^1.9.0",
@@ -54,6 +55,7 @@
         "tether": "^1.4.7",
         "uglifyjs-webpack-plugin": "^2.2.0",
         "uid-safe": "^2.1.4",
+        "update": "^0.7.4",
         "webpack": "^4.41.2",
         "webpack-dev-middleware": "^1.8.4"
     },
