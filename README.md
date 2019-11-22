@@ -46,5 +46,5 @@ $ git clone https://github.com/hiroimono/Frontend_Challenge.git
 $ cd ../Frontend_Challenge
 $ npm install
 $ node ./bundle-server.js
-$ node . // or $ nodemon .
+$ npm start  (or '$ node .' or '$ nodemon . ')
 ```
