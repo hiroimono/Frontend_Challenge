@@ -1,16 +1,39 @@
 import React, { useState, useEffect } from 'react';
+import BeautyStars from 'beauty-stars';
 import axios from '../axios';
-// import * as podlist from '../../utils/podlist';
+// import * as podlist from '../../utils/podlist'; // This JSON File is used for the first part of challenge before using a DB
+
+var isFirstMount = true;
 
 function List() {
     const [podcasts, setPodcasts] = useState([]);
+    const [star, setStar] = useState(0);
+    const [podcastID, setPodcastID] = useState(null);
 
     const tracks = [];
 
     console.log('tracks starting: ', tracks);
     console.log('podcasts starting: ', podcasts);
 
-    const loadFunc = () => {
+    const loadFunc = async () => {
+        if(!isFirstMount){
+            await sendStar();
+
+            async function sendStar () {
+                const payload = {
+                    id: podcastID,
+                    star: star
+                };
+                console.log('payload ID: ', payload.id, ' payload Star: ', payload.star);
+                await axios.post('/send-star', payload)
+                    .then( result => {
+                        console.log('Podcast star is updated: ', result.data);
+                    })
+                    .catch( err => console.log('/send-star, axios Error: ', err) );
+            }
+        }
+
+        await getPodcastsFromDatabase();
 
         async function getPodcastsFromDatabase () {
             const PodCastsTakenFromDB = await axios
@@ -34,20 +57,36 @@ function List() {
             setPodcasts(myTracks);
         }
 
-        getPodcastsFromDatabase();
-
     };
 
-    useEffect( loadFunc, [] );
+
+    // This is only for first mount
+    useEffect( () => loadFunc(), [] );
+
+    // This is only next mounts
+    useEffect( () => {
+        if (!isFirstMount) {
+            loadFunc();
+        } else isFirstMount = false;
+    }, [star, podcastID]);
 
     const more = () => {
         console.log('More button works!!!');
     };
 
+    // const getPodcastID = (id) => {
+    //     async function fn () {
+    //         await setPodcastID( id );
+    //     }
+    //     fn();
+    //     sendStar();
+    // };
+
+
     return (
         <div style={{ marginTop:'60px'}}>
 
-            {console.log('This page is rendered now!')}
+            {console.log('////////Rendering///////')}
 
             <ul className="cd-hero-slider" style={{marginTop: '10px', height: '100%'}}>
 
@@ -64,6 +103,17 @@ function List() {
                                                 <figcaption>
                                                     <p className="tm-figure-description" style={{fontSize: '1.5rem'}}>{ podcast.title } </p>
                                                 </figcaption>
+                                                <div style={{display:'flex', justifyContent:'center'}}>
+                                                    <BeautyStars size={'20px'}
+                                                        value={ podcast.star_num }
+                                                        onChange={ (value) => {
+                                                            setPodcastID( podcast.id );
+                                                            console.log('Podcast ID: ', podcastID, ' Star: ', star);
+                                                            setStar(value);
+                                                            console.log('Podcast ID: ', podcastID, ' Star: ', star);
+                                                        }}
+                                                    />
+                                                </div>
                                             </figure>
                                         </div>
                                     ))}
