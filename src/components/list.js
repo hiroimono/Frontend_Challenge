@@ -9,6 +9,7 @@ function List() {
     const [podcasts, setPodcasts] = useState([]);
     const [star, setStar] = useState(0);
     const [podcastID, setPodcastID] = useState(null);
+    const [order, setOrder] = useState('desc');
 
     const tracks = [];
 
@@ -56,7 +57,92 @@ function List() {
             console.log('tracks after: ', myTracks);
             setPodcasts(myTracks);
         }
+    };
 
+    const loadFuncDESC = async () => {
+        if(!isFirstMount){
+            await sendStar();
+
+            async function sendStar () {
+                const payload = {
+                    id: podcastID,
+                    star: star
+                };
+                console.log('payload ID: ', payload.id, ' payload Star: ', payload.star);
+                await axios.post('/send-star', payload)
+                    .then( result => {
+                        console.log('Podcast star is updated: ', result.data);
+                    })
+                    .catch( err => console.log('/send-star, axios Error: ', err) );
+            }
+        }
+
+        await getPodcastsFromDatabaseDESC();
+
+        async function getPodcastsFromDatabaseDESC () {
+            const PodCastsTakenFromDB = await axios
+                .get('/getPodcastsFromDatabaseDESC');
+
+            console.log('PodCastsTakenFromDB: ', PodCastsTakenFromDB);
+
+            let myTracks = [...PodCastsTakenFromDB.data.map( (podcast) => {
+                ////Check for podcasts which are not have image and add them a default image
+                if (!podcast.img_url || podcast.img_url == null) {
+                    return {
+                        ...podcast,
+                        image : 'https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fi.ytimg.com%2Fvi%2FuF_cuBWZBgE%2Fmaxresdefault.jpg&f=1&nofb=1'
+                    };
+                } else {
+                    return podcast;
+                }
+            })];
+
+            console.log('tracks after: ', myTracks);
+            setPodcasts(myTracks);
+        }
+    };
+
+    const loadFuncASC = async () => {
+        if(!isFirstMount){
+            await sendStar();
+
+            async function sendStar () {
+                const payload = {
+                    id: podcastID,
+                    star: star
+                };
+                console.log('payload ID: ', payload.id, ' payload Star: ', payload.star);
+                await axios.post('/send-star', payload)
+                    .then( result => {
+                        console.log('Podcast star is updated: ', result.data);
+                    })
+                    .catch( err => console.log('/send-star, axios Error: ', err) );
+            }
+        }
+
+        await getPodcastsFromDatabaseASC();
+
+        async function getPodcastsFromDatabaseASC () {
+            const PodCastsTakenFromDB = await axios
+                .get('/getPodcastsFromDatabaseASC');
+
+            console.log('PodCastsTakenFromDB: ', PodCastsTakenFromDB);
+
+            let myTracks = [...PodCastsTakenFromDB.data.map( (podcast) => {
+                ////Check for podcasts which are not have image and add them a default image
+                if (!podcast.img_url || podcast.img_url == null) {
+                    return {
+                        ...podcast,
+                        image : 'https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fi.ytimg.com%2Fvi%2FuF_cuBWZBgE%2Fmaxresdefault.jpg&f=1&nofb=1'
+                    };
+                } else {
+                    return podcast;
+                }
+            })];
+
+            console.log('tracks after: ', myTracks);
+            setPodcasts(myTracks);
+        }
     };
 
 
@@ -70,17 +156,25 @@ function List() {
         } else isFirstMount = false;
     }, [star, podcastID]);
 
+    useEffect( () => {
+        if (!isFirstMount && order == 'desc') {
+            loadFuncDESC();
+        } else if (!isFirstMount && order == 'asc') {
+            loadFuncASC();
+        } else isFirstMount = false;
+    }, [order]);
+
+    const orderDESC = () => {
+        setOrder('desc');
+    };
+
+    const orderASC = () => {
+        setOrder('asc');
+    };
+
     const more = () => {
         console.log('More button works!!!');
     };
-
-    // const getPodcastID = (id) => {
-    //     async function fn () {
-    //         await setPodcastID( id );
-    //     }
-    //     fn();
-    //     sendStar();
-    // };
 
 
     return (
@@ -92,6 +186,17 @@ function List() {
 
                 <li className="selected">
                     <div className="cd-full-width" style={{position: "relative"}}>
+
+                        <button
+                            onClick = {orderDESC}
+                        >Order the list by the highest rated items
+                        </button>
+
+                        <button
+                            onClick = {orderASC}
+                        >Order the list by the lowest rated items
+                        </button>
+
                         <div className="container-fluid js-tm-page-content" data-page-no="1" data-page-type="gallery" style={{marginTop: '10px'}}>
                             <div className="tm-img-gallery-container">
                                 <div className="tm-img-gallery gallery-one">

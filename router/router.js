@@ -1,7 +1,7 @@
 const express               = require('express');
 const db                    = require('../utils/db');
 
-///////////////////// For only one time usage for saving JSON data to database/////////////
+// /////////////////// For only one time usage for saving JSON data to database/////////////
 // const podlist               = require ('../utils/podlist');
 // console.log('podlist.length in db.js: ', podlist.length);
 //
@@ -10,12 +10,28 @@ const db                    = require('../utils/db');
 //         .then( () => console.log('oneline podcast is added.'))
 //         .catch( err => console.log(err));
 // }
-///////////////////// For only one time usage for saving JSON data to database/////////////
+// /////////////////// For only one time usage for saving JSON data to database/////////////
 
 const router = express.Router();
 
 router.get('/getPodcastsFromDatabase', (req, res) => {
     db.getPodcastsFromDatabase()
+        .then( (results) => {
+            res.json(results);
+        })
+        .catch();
+});
+
+router.get('/getPodcastsFromDatabaseDESC', (req, res) => {
+    db.getPodcastsFromDatabaseDESC()
+        .then( (results) => {
+            res.json(results);
+        })
+        .catch();
+});
+
+router.get('/getPodcastsFromDatabaseASC', (req, res) => {
+    db.getPodcastsFromDatabaseASC()
         .then( (results) => {
             res.json(results);
         })

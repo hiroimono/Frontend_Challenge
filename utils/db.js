@@ -27,6 +27,24 @@ exports.getPodcastsFromDatabase = () => {
         .catch( err => console.log(err));
 };
 
+exports.getPodcastsFromDatabaseDESC = () => {
+    return db.query (`SELECT * FROM podlist order by star_num desc`)
+        .then(({rows}) => {
+            console.log('rows length taken from DB: ', rows.length);
+            return rows;
+        })
+        .catch( err => console.log(err));
+};
+
+exports.getPodcastsFromDatabaseASC = () => {
+    return db.query (`SELECT * FROM podlist order by star_num asc`)
+        .then(({rows}) => {
+            console.log('rows length taken from DB: ', rows.length);
+            return rows;
+        })
+        .catch( err => console.log(err));
+};
+
 exports.saveStar = (id, star) => {
     return db.query (`UPDATE podlist SET star_num = $2 WHERE id = $1 RETURNING star_num`, [id, star])
         .then(({rows}) => {
