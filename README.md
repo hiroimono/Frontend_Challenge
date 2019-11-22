@@ -26,7 +26,7 @@ press again it will stop random rating.
 # Solution:
 
 ## General info
-This project is simple a template for any list of Items with a system.
+This project is simple a template for any list of Items with a rating system.
 
 ## Technologies
 Project is created with:
