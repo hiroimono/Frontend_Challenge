@@ -38,6 +38,14 @@ router.get('/getPodcastsFromDatabaseASC', (req, res) => {
         .catch();
 });
 
+router.get('/getPodcastsFromDatabaseRAND', (req, res) => {
+    db.getPodcastsFromDatabaseRAND()
+        .then( (results) => {
+            res.json(results);
+        })
+        .catch();
+});
+
 router.post('/send-star', (req, res) => {
     console.log('req.body in /send-star: ', req.body);
     let { id, star } = req.body;

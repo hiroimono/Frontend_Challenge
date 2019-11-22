@@ -9,7 +9,10 @@ function List() {
     const [podcasts, setPodcasts] = useState([]);
     const [star, setStar] = useState(0);
     const [podcastID, setPodcastID] = useState(null);
-    const [order, setOrder] = useState('desc');
+    const [order, setOrder] = useState('');
+    const [isRandom, setIsRandom] = useState(false);
+
+
 
     const tracks = [];
 
@@ -145,24 +148,60 @@ function List() {
         }
     };
 
+    const loadFuncRAND = async () => {
+
+        await getPodcastsFromDatabaseRAND();
+
+        async function getPodcastsFromDatabaseRAND () {
+            const PodCastsTakenFromDB = await axios
+                .get('/getPodcastsFromDatabaseRAND');
+
+            console.log('PodCastsTakenFromDB: ', PodCastsTakenFromDB);
+
+            let myTracks = [...PodCastsTakenFromDB.data.map( (podcast) => {
+                ////Check for podcasts which are not have image and add them a default image
+                if (!podcast.img_url || podcast.img_url == null) {
+                    return {
+                        ...podcast,
+                        image : 'https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fi.ytimg.com%2Fvi%2FuF_cuBWZBgE%2Fmaxresdefault.jpg&f=1&nofb=1'
+                    };
+                } else {
+                    return podcast;
+                }
+            })];
+
+            console.log('tracks after: ', myTracks);
+            setPodcasts(myTracks);
+        }
+    };
+
 
     // This is only for first mount
     useEffect( () => loadFunc(), [] );
 
     // This is only next mounts
-    useEffect( () => {
-        if (!isFirstMount) {
-            loadFunc();
-        } else isFirstMount = false;
-    }, [star, podcastID]);
+    // useEffect( () => {
+    //     if (!isFirstMount) {
+    //         loadFunc();
+    //     } else isFirstMount = false;
+    // }, []);
 
     useEffect( () => {
-        if (!isFirstMount && order == 'desc') {
-            loadFuncDESC();
-        } else if (!isFirstMount && order == 'asc') {
-            loadFuncASC();
-        } else isFirstMount = false;
-    }, [order]);
+        if (!isRandom) {
+            console.log('isRandom: ', isRandom);
+            clearInterval();
+            if ( !isFirstMount && order == 'desc' ) {
+                loadFuncDESC();
+            } else if ( !isFirstMount && order == 'asc' ) {
+                loadFuncASC();
+            } else if ( !isFirstMount ) {
+                loadFunc();
+            } else isFirstMount = false;
+        } else {
+            console.log('isRandom: ', isRandom);
+            setInterval( () => loadFuncRAND(), (Math.random() * 10 * 1000));
+        }
+    }, [star, podcastID, order, isRandom]);
 
     const orderDESC = () => {
         setOrder('desc');
@@ -170,6 +209,12 @@ function List() {
 
     const orderASC = () => {
         setOrder('asc');
+    };
+
+    const randomRating = async () => {
+        // console.log('Test-RandomRating');
+        await setIsRandom(!isRandom);
+
     };
 
     const more = () => {
@@ -186,17 +231,22 @@ function List() {
 
                 <li className="selected">
                     <div className="cd-full-width" style={{position: "relative"}}>
+                        <div style={{display: 'flex', justifyContent:'space-around', width:'80%'}}>
+                            <button
+                                onClick = {orderDESC}
+                            >Order by the highest
+                            </button>
 
-                        <button
-                            onClick = {orderDESC}
-                        >Order the list by the highest rated items
-                        </button>
+                            <button
+                                onClick = {orderASC}
+                            >Order by the lowest
+                            </button>
 
-                        <button
-                            onClick = {orderASC}
-                        >Order the list by the lowest rated items
-                        </button>
-
+                            <button
+                                onClick = {randomRating}
+                            >RANDOM RATING
+                            </button>
+                        </div>
                         <div className="container-fluid js-tm-page-content" data-page-no="1" data-page-type="gallery" style={{marginTop: '10px'}}>
                             <div className="tm-img-gallery-container">
                                 <div className="tm-img-gallery gallery-one">

@@ -45,6 +45,31 @@ exports.getPodcastsFromDatabaseASC = () => {
         .catch( err => console.log(err));
 };
 
+exports.getPodcastsFromDatabaseRAND = () => {
+    return db.query (`
+      UPDATE podlist
+      SET star_num =
+        (
+          CASE (RANDOM() * 5)::INT
+            WHEN 0 THEN 0
+            WHEN 1 THEN 1
+            WHEN 2 THEN 2
+	          WHEN 3 THEN 3
+            WHEN 4 THEN 4
+            WHEN 5 THEN 5
+          END
+        ) where id<40`)
+        .then( () => {
+            return db.query (`SELECT * FROM podlist order by star_num desc`)
+                .then(({rows}) => {
+                    console.log('rows length taken from DB: ', rows.length);
+                    return rows;
+                })
+                .catch( err => console.log(err));
+        })
+        .catch( err => console.log(err));
+};
+
 exports.saveStar = (id, star) => {
     return db.query (`UPDATE podlist SET star_num = $2 WHERE id = $1 RETURNING star_num`, [id, star])
         .then(({rows}) => {
