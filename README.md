@@ -33,6 +33,8 @@ This project is simple a template for any list of Items with a rating system.
 
 A json file ('../Frontend_Challenge/utils/secret.json') is used as source (a podcast list) pulled from a free API (the url address: https://www.listennotes.com/api/docs/ ). 
 
+This project is made fully responsive for kind of mobile device.
+
 ## Technologies
 
 Project is created with:
@@ -44,6 +46,7 @@ Project is created with:
 -   Webpack
 -   Babel
 -   PostgreSQL
+-   Bootstrap4
 
 ## Setup
 
