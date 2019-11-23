@@ -29,7 +29,9 @@ To see challenge after production, visit live heroku page: https://challenge--fr
 
 ## General info
 
-This project is simple a template for any list of Items with a rating system.
+This project is simple a template for any list of Items with a rating system. 
+
+A json file ('../Frontend_Challenge/utils/secret.json') is used as source (a podcast list) pulled from a free API (the url address: https://www.listennotes.com/api/docs/ ). 
 
 ## Technologies
 
