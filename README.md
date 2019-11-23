@@ -25,6 +25,8 @@
 
 # Solution:
 
+To see challenge after production, visit live heroku page: https://challenge--frontend.herokuapp.com/
+
 ## General info
 
 This project is simple a template for any list of Items with a rating system.
@@ -43,7 +45,7 @@ Project is created with:
 
 ## Setup
 
-To run this project, install it locally using npm:
+To run this project and install it locally using npm, make this steps:
 
 ### Initial Settings
 
@@ -78,3 +80,5 @@ To be able to save the podcast list to the database named 'podlist':
 -   After this restarting, the JSON file at '../Frontend_Challenge/utils/podlist.json' should be saved to the database 'podlist'.
 -   Close the comment lines between 4'th and 13'th (use Ctl + #) and save (Ctl + S) it again. We no longer need this part and this JSON file. We just used it only to save some data of podcasts to our 'podlist' database we created.
 -   Stop (Ctl + C) and restart project again ('npm start' or 'node .' or 'nodemon .' )
+
+Visit live page: https://challenge--frontend.herokuapp.com/
