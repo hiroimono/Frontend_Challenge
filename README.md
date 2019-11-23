@@ -41,6 +41,7 @@ Project is created with:
 ## Setup
 To run this project, install it locally using npm:
 
+###Initial Settings
 ```
 $ git clone https://github.com/hiroimono/Frontend_Challenge.git
 $ cd ../Frontend_Challenge
@@ -48,3 +49,20 @@ $ npm install
 $ node ./bundle-server.js
 $ npm start  (or '$ node .' or '$ nodemon . ')
 ```
+###Database Settings
+For this part, PostgreSQL must be installed on the computer.
+```
+$ cd ../Frontend_Challenge/sql/
+$ sudo service postgresql start
+$ createdb podlist
+$ psql -d podlist -f podlist.sql
+
+```
+
+To be able to save the podcast list to database named podlist:
+* open ../Frontend_Challenge/router/router.js file
+* Open the comment lines between 4'th and 13'th (use Ctl + #)
+* Restart project again ('npm start' or 'node .' or 'nodemon .' )
+* After this restarting, the JSON file at '../Frontend_Challenge/utils/podlist.json' should be saved to database podlist.
+* Close the comment lines between 4'th and 13'th (use Ctl + #). We no longer need this part and this JSON file. We just used it only to save data in it to our podlist database we created.
+* Stop (Ctl + C) and restart project again ('npm start' or 'node .' or 'nodemon .' )
