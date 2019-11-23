@@ -41,7 +41,7 @@ Project is created with:
 ## Setup
 To run this project, install it locally using npm:
 
-###Initial Settings
+### Initial Settings
 ```
 $ git clone https://github.com/hiroimono/Frontend_Challenge.git
 $ cd ../Frontend_Challenge
@@ -49,7 +49,7 @@ $ npm install
 $ node ./bundle-server.js
 $ npm start  (or '$ node .' or '$ nodemon . ')
 ```
-###Database Settings
+### Database Settings
 For this part, PostgreSQL must be installed on the computer.
 ```
 $ cd ../Frontend_Challenge/sql/
