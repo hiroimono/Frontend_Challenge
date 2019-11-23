@@ -1,10 +1,13 @@
-const spicedPg 			= require('spiced-pg');
+const spicedPg = require('spiced-pg');
 
 let db;
 if (process.env.DATABASE_URL) {
     db = spicedPg(process.env.DATABASE_URL);
 } else {
-    const { dbuser, dbpass } = require('./secret');
+    const {
+        dbuser,
+        dbpass
+    } = require('./secret');
     // db = spicedPg(`postgres:postgres:postgres@localhost:5432/podlist`);
     db = spicedPg(`postgres:${dbuser}:${dbpass}@localhost:5432/podlist`); // more secure option to login
 }
@@ -19,34 +22,40 @@ exports.registerPodcasts = (podlist_id, title, img_url) => {
 };
 
 exports.getPodcastsFromDatabase = () => {
-    return db.query (`SELECT * FROM podlist order by id asc`)
-        .then(({rows}) => {
+    return db.query(`SELECT * FROM podlist order by id asc`)
+        .then(({
+            rows
+        }) => {
             console.log('rows length taken from DB: ', rows.length);
             return rows;
         })
-        .catch( err => console.log(err));
+        .catch(err => console.log(err));
 };
 
 exports.getPodcastsFromDatabaseDESC = () => {
-    return db.query (`SELECT * FROM podlist order by star_num desc`)
-        .then(({rows}) => {
+    return db.query(`SELECT * FROM podlist order by star_num desc`)
+        .then(({
+            rows
+        }) => {
             console.log('rows length taken from DB: ', rows.length);
             return rows;
         })
-        .catch( err => console.log(err));
+        .catch(err => console.log(err));
 };
 
 exports.getPodcastsFromDatabaseASC = () => {
-    return db.query (`SELECT * FROM podlist order by star_num asc`)
-        .then(({rows}) => {
+    return db.query(`SELECT * FROM podlist order by star_num asc`)
+        .then(({
+            rows
+        }) => {
             console.log('rows length taken from DB: ', rows.length);
             return rows;
         })
-        .catch( err => console.log(err));
+        .catch(err => console.log(err));
 };
 
 exports.getPodcastsFromDatabaseRAND = () => {
-    return db.query (`
+    return db.query(`
       UPDATE podlist
       SET star_num =
         (
@@ -59,22 +68,26 @@ exports.getPodcastsFromDatabaseRAND = () => {
             WHEN 5 THEN 5
           END
         ) where id<40`)
-        .then( () => {
-            return db.query (`SELECT * FROM podlist order by star_num desc`)
-                .then(({rows}) => {
+        .then(() => {
+            return db.query(`SELECT * FROM podlist order by star_num desc`)
+                .then(({
+                    rows
+                }) => {
                     console.log('rows length taken from DB: ', rows.length);
                     return rows;
                 })
-                .catch( err => console.log(err));
+                .catch(err => console.log(err));
         })
-        .catch( err => console.log(err));
+        .catch(err => console.log(err));
 };
 
 exports.saveStar = (id, star) => {
-    return db.query (`UPDATE podlist SET star_num = $2 WHERE id = $1 RETURNING star_num`, [id, star])
-        .then(({rows}) => {
+    return db.query(`UPDATE podlist SET star_num = $2 WHERE id = $1 RETURNING star_num`, [id, star])
+        .then(({
+            rows
+        }) => {
             console.log('rows[0].star_num', rows[0].star_num);
             return rows[0].star_num;
         })
-        .catch( err => console.log(err));
+        .catch(err => console.log(err));
 };
