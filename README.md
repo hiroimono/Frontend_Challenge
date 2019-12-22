@@ -31,7 +31,7 @@ To see challenge after production, visit live heroku page: https://challenge--fr
 
 This project is simple a template for any list of Items with a rating system. 
 
-A json file ('../Frontend_Challenge/utils/secret.json') is used as source (a podcast list) pulled from a free API (the url address: https://www.listennotes.com/api/docs/ ). 
+A json file ('../Raect_Challenge_Order_podcastlist/utils/secret.json') is used as source (a podcast list) pulled from a free API (the url address: https://www.listennotes.com/api/docs/ ). 
 
 This project is made fully responsive for kind of mobile device.
 
@@ -55,8 +55,8 @@ To run this project and install it locally using npm, make this steps:
 ### Initial Settings
 
 ```
-$ git clone https://github.com/hiroimono/Frontend_Challenge.git
-$ cd ../Frontend_Challenge
+$ git clone https://github.com/hiroimono/Raect_Challenge_Order_podcastlist.git
+$ cd ../Raect_Challenge_Order_podcastlist
 $ npm install
 $ node ./bundle-server.js
 $ npm start  (or '$ node .' or '$ nodemon . ')
@@ -67,7 +67,7 @@ $ npm start  (or '$ node .' or '$ nodemon . ')
 For this part, PostgreSQL must be installed on the computer.
 
 ```
-$ cd ../Frontend_Challenge/sql/
+$ cd ../Raect_Challenge_Order_podcastlist/sql/
 $ sudo service postgresql start
 $ createdb podlist
 $ psql -d podlist -f podlist.sql
@@ -76,13 +76,13 @@ $ psql -d podlist -f podlist.sql
 
 To be able to save the podcast list to the database named 'podlist':
 
--   Open '../Frontend_Challenge/utils/secret.json' file
+-   Open '../Raect_Challenge_Order_podcastlist/utils/secret.json' file
 -   Enter your own postgres database's username and password in order to access 'podlist' table (if the username and password are 'postgres' and 'postgres', you can leave it same.)
--   Enter also this username and password to '../Frontend_Challenge/utils/db.js' file's 12'th line as 'dbuser' and 'dbpass'.
--   open ../Frontend_Challenge/router/router.js file
+-   Enter also this username and password to '../Raect_Challenge_Order_podcastlist/utils/db.js' file's 12'th line as 'dbuser' and 'dbpass'.
+-   open ../Raect_Challenge_Order_podcastlist/router/router.js file
 -   Open the comment lines between 4'th and 13'th (use Ctl + #) and save (Ctl + S) the file to be able send some information we need from 'podlist.json' file to the database 'podlist'.
 -   Restart project again ('npm start' or 'node .' or 'nodemon .' )
--   After this restarting, the JSON file at '../Frontend_Challenge/utils/podlist.json' should be saved to the database 'podlist'.
+-   After this restarting, the JSON file at '../Raect_Challenge_Order_podcastlist/utils/podlist.json' should be saved to the database 'podlist'.
 -   Close the comment lines between 4'th and 13'th (use Ctl + #) and save (Ctl + S) it again. We no longer need this part and this JSON file. We just used it only to save some data of podcasts to our 'podlist' database we created.
 -   Stop (Ctl + C) and restart project again ('npm start' or 'node .' or 'nodemon .' )
 
